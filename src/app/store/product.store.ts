@@ -1,40 +1,72 @@
 // product.state.ts
 
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import { ProductService } from '../services/product.service';
-import {GetProducts, ProductStateModel } from './product.actions';
+import {GetProducts, GetProductsFailed, GetProductsReset, GetProductsSuccess, ProductStateModel } from './product.actions';
 import { Injectable } from '@angular/core';
+import { Product } from '../models/product.model';
 
 
 @State<ProductStateModel>({
   name: 'products',
   defaults: {
     products: [],
+    loadingProducts: false,
+    loadingProductsError: null,
   },
 })
 
 @Injectable()
 export class ProductState {
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private store: Store) {}
 
   // Selectors
   @Selector()
-  static getProducts(state: ProductStateModel): any[] {
+  static getProducts(state: ProductStateModel): Product[] {
     return state.products;
   }
 
   // Actions
   @Action(GetProducts)
-  getProducts({ getState, setState }: StateContext<ProductStateModel>) {
-    return this.productService.getProducts().pipe(
-      tap((response) => {
-        const state = getState();
-        setState({
-          ...state,
-          products: response, // Assuming the result is an array of products
-        });
-      })
-    );
+  getProducts(
+      context: StateContext<ProductStateModel>) {
+      return this.productService.getProducts().pipe(tap(response => {
+        context.patchState({ loadingProducts: true});
+
+        this.store.dispatch(new GetProductsSuccess(response));
+      }, error => {
+        this.store.dispatch(new GetProductsFailed(error));
+    }));
+  }
+
+  @Action(GetProductsSuccess)
+  getProductsSuccess(
+      context: StateContext<ProductStateModel>,
+      payload: GetProductsSuccess) {
+      context.patchState({
+          products: [...payload.products],
+          loadingProducts: false
+      });
+  }
+
+  @Action(GetProductsFailed)
+  getProductsFailed(
+      { patchState }: StateContext<ProductStateModel>,
+      payload: GetProductsFailed) {
+      patchState({
+        loadingProducts: false,
+        loadingProductsError: payload.message
+      });
+  }
+
+  @Action(GetProductsReset)
+  getProductsReset(
+      { patchState }: StateContext<ProductStateModel>) {
+      patchState({
+        loadingProducts: false,
+        loadingProductsError: null,
+        products: []
+      });
   }
  }
