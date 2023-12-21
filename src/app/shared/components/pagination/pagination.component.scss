@@ -22,6 +22,10 @@ $pagination-margin-item: 2px;
     border: $pagination-border;
   }
 
+  button:hover {
+    background-color:$primary-color;
+  }
+
   button[disabled] {
     background-color: $light-color;
     cursor: not-allowed;
