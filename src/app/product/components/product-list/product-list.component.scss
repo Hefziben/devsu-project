@@ -1,0 +1,58 @@
+@import '../../../../variables.scss';
+.content-wrapper {
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: $background-color;
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    padding: 0 1rem;
+    margin: 1rem;
+    overflow-y: auto;
+    height: fit-content;
+
+  }
+  .table-wrapper {
+    background: #FFFFFF;
+    margin:1rem 0;
+    overflow-y: auto;
+    min-height: 100px;
+    max-height:330px;
+
+    .product-table {
+      border-collapse: collapse;
+      th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid $light-color;
+      }
+
+      th {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        background-color: #f9fafc;
+        width: 200px;
+      }
+      th:nth-child(1), td:nth-child(1) {
+        text-align: center;
+        max-width: 100px;
+       }
+
+      .product-image {
+        width: 60px;
+        height: auto;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .table-wrapper  thead th {
+    position: sticky;
+    top: 0px;
+  }
+
+}

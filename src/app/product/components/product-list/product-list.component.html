@@ -1,0 +1,29 @@
+<div class="content-wrapper">
+  <div class="main-content">
+    <div class="table-wrapper">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th *ngFor="let column of displayedColumns">{{column}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products$ | async | slice: getStartIndex() : getEndIndex()">
+            <td><img class="product-image" [src]="product.logo" alt="Logo"></td>
+            <td>{{product.name}}</td>
+            <td>{{product.description}}</td>
+            <td>{{product.date_release | date:'MM/dd/yyyy'}}</td>
+            <td>{{product.date_revision | date:'MM/dd/yyyy'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    [results]="totalItems"
+    (pageChange)="onPageChange($event)"
+    (itemsPerPageChange)="onItemsPerPageChange($event)"
+  ></app-pagination>
+  </div>
+</div>
