@@ -1,0 +1,14 @@
+<div class="pagination">
+  <div>
+    <label>{{results}} Resultados</label>
+  </div>
+  <div>
+    <button class="pagination-button" (click)="onPageClick(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+    <button class="pagination-button" (click)="onPageClick(currentPage + 1)" [disabled]="currentPage === totalPages">Siguiente</button>
+  </div>
+  <div class="items-per-page">
+    <select (change)="onItemsPerPageChange($event)">
+      <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+    </select>
+  </div>
+</div>

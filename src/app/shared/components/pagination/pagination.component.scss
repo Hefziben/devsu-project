@@ -1,0 +1,36 @@
+@import '../../../../variables.scss';
+
+$pagination-padding: 0 1rem;
+$pagination-margin: 20px 0;
+$pagination-border: 1px solid $light-color;
+$pagination-padding-item: 8px;
+$pagination-margin-item: 2px;
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: $pagination-padding;
+  margin: $pagination-margin;
+  align-items: center;
+  justify-content: space-between;
+
+  &-button {
+    font-family: $font-family;
+    padding: $pagination-padding-item;
+    margin: $pagination-margin-item;
+    cursor: pointer;
+    border: $pagination-border;
+  }
+
+  button[disabled] {
+    background-color: $light-color;
+    cursor: not-allowed;
+  }
+
+  .items-per-page select {
+    padding: 4px;
+    width: 60px;
+    border-radius: 4px;
+    border: 2px solid $light-color;
+  }
+}
