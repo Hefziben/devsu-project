@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable, takeUntil } from 'rxjs';
-import { Product } from 'src/app/models/product.model';
-import { Destroyable } from 'src/app/shared/abstract/destroyable';
-import { GetProducts, GetProductsReset } from 'src/app/store/product.actions';
-import { ProductState } from 'src/app/store/product.store';
+import { Product } from '../../../models/product.model';
+import { Destroyable } from '../../../shared/abstract/destroyable';
+import { GetProducts, GetProductsReset } from '../../../store/product.actions';
+import { ProductState } from '../../../store/product.store';
 
 @Component({
   selector: 'app-product-list',
