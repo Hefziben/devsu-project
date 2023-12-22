@@ -16,4 +16,13 @@ export class ProductService {
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.baseUrl}/products`);
   }
+
+  validateProductId(productId: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/products/verification?id=${productId}`);
+  }
+
+  addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(`${this.baseUrl}/products`, product );
+  }
+
 }
