@@ -7,6 +7,8 @@ export interface ProductStateModel {
   productIdExist: boolean;
   loadingProductsError: string | null;
   addingProduct: boolean;
+  updatingProduct: boolean;
+  selectedProduct: Product | null;
 }
 
 // Actions
@@ -60,5 +62,25 @@ export class AddProductFailed {
 
 export class AddProductReset {
   static readonly type = '[Product] Add Product Reset';
+}
+
+export class GetProductById {
+  static readonly type = '[Product] Get Products By ID';
+  constructor(public productId: string) {}
+}
+
+export class UpdateProduct {
+  static readonly type = '[Product] Update Product';
+  constructor(public product: Product) {}
+}
+
+export class UpdateProductSuccess {
+  static readonly type = '[Product] Update Product Success';
+  constructor(public product: Product) {}
+}
+
+export class UpdateProductFailed {
+  static readonly type = '[Product] Update Product Failed';
+  constructor(public message: string) {}
 }
 
