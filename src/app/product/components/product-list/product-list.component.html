@@ -1,5 +1,8 @@
 <div class="content-wrapper">
   <div class="main-content">
+    <div class="search-product">
+      <input type="text" placeholder="Buscar" [(ngModel)]="searchTerm" (input)="onSearch()">
+    </div>
     <div class="table-wrapper">
       <table class="product-table">
         <thead>
@@ -8,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of products$ | async | slice: getStartIndex() : getEndIndex()">
+          <tr *ngFor="let product of filteredProducts | slice: getStartIndex() : getEndIndex()">
             <td><img class="product-image" [src]="product.logo" alt="Logo"></td>
             <td>{{product.name}}</td>
             <td>{{product.description}}</td>
