@@ -5,6 +5,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { SharedModule } from 'src/app/shared/share.module';
 import { ProductComponent } from './pages/product.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ProductComponent } from './pages/product.component';
   imports: [
     CommonModule,
     ProductRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class ProductModule { }
