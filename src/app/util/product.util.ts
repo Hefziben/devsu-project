@@ -24,3 +24,18 @@ export const getDefaultProduct = (): Product => {
     date_revision: addYearsToDate(currentDate)
   };
 };
+
+export const productUpdateHelper = (array: Product[], newValue: Product) => {
+  const currentIndex = array.findIndex(item => item.id === newValue.id);
+
+  if (currentIndex !== -1) {
+    // Use spread operator to create a new array with the updated product
+    return [
+      ...array.slice(0, currentIndex),  // elements before the updated product
+      newValue,                      // the updated product
+      ...array.slice(currentIndex + 1)   // elements after the updated product
+    ];
+  }
+  // If task with given id is not found, return the original list
+  return array;
+}
