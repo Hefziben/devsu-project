@@ -20,7 +20,7 @@ export class ProductListComponent extends Destroyable implements OnInit {
   itemsPerPage:number = 5;
   currentPage: number = 1;
   totalPages: number = 0;
-  displayedColumns: string[] = ['Logo','Nombre del producto','Descripción','Fecha Liberación','Fecha Restructuración'];
+  displayedColumns: string[] = ['Logo','Nombre del producto','Descripción','Fecha Liberación','Fecha Restructuración', ''];
   searchTerm = '';
   productFilter$ = new Subject<string>();
   products: Product[] = [];
