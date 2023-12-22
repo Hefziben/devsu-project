@@ -7,3 +7,8 @@ export const addYearsToDate = (dateString: string, yearsToAdd = 1): string => {
 export const getCurrentDate = (): string => {
   return new Date().toISOString().split('T')[0];
 };
+
+export const getCurrentDateFromString = (dateString: string): string => {
+  const currentDate = new Date(dateString);
+  return currentDate.toISOString().split('T')[0];
+};
