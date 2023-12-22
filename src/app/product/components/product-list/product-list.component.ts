@@ -6,6 +6,7 @@ import { Destroyable } from '../../../shared/abstract/destroyable';
 import { GetProducts, GetProductsReset } from '../../../store/product.actions';
 import { ProductState } from '../../../store/product.store';
 import { filterItems } from 'src/app/util/product.util';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -24,7 +25,11 @@ export class ProductListComponent extends Destroyable implements OnInit {
   productFilter$ = new Subject<string>();
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  constructor(private store: Store) {
+  constructor(
+    private store: Store,
+    private router: Router,
+    private route: ActivatedRoute
+    ) {
     super();
   }
 
@@ -36,18 +41,18 @@ export class ProductListComponent extends Destroyable implements OnInit {
       this.updateTotalItems()
     })
     this.store.dispatch((new GetProducts()));
-    
-        this.productFilter$
-        .pipe(
-          debounceTime(200),
-          distinctUntilChanged(),
-          switchMap(term => filterItems(term, this.products))
-        )
-        .subscribe(filteredProducts => {
-          this.filteredProducts = filteredProducts;
-          this.updateTotalItems()
-        });
-    }
+
+    this.productFilter$
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap(term => filterItems(term, this.products))
+      )
+      .subscribe(filteredProducts => {
+        this.filteredProducts = filteredProducts;
+        this.updateTotalItems()
+      });
+  }
 
   getStartIndex(): number {
     return (this.currentPage - 1) * this.itemsPerPage;
@@ -74,6 +79,10 @@ export class ProductListComponent extends Destroyable implements OnInit {
   updateTotalItems() {
     this.totalItems = this.filteredProducts.length;
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  addProduct() {
+    this.router.navigate(['agregar'], { relativeTo: this.route });
   }
 
 }

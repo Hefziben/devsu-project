@@ -1,7 +1,10 @@
 <div class="content-wrapper">
   <div class="main-content">
-    <div class="search-product">
-      <input type="text" placeholder="Buscar" [(ngModel)]="searchTerm" (input)="onSearch()">
+    <div class="list-options">
+      <div class="search-product">
+        <input type="text" placeholder="Buscar" [(ngModel)]="searchTerm" (input)="onSearch()">
+      </div>
+        <button class="general-btn"type="button"(click)="addProduct()">Agregar</button>
     </div>
     <div class="table-wrapper">
       <table class="product-table">
