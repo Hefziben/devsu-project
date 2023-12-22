@@ -1,13 +1,14 @@
 <div class="content-wrapper">
   <div class="main-content">
     <div class="form-container">
-      <div class="form-title">Formulario de Registro</div>
+      <div class="form-title">{{selectedProduct ? 'Editar Registro' : 'Formulario de Registro'}} </div>
       <form #form="ngForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-column">
             <div class="form-control-group">
               <div class="field-title">ID <span class="required">*</span></div>
               <input
+              [disabled]="disableId"
                 [class.loading]="loading$ | async"
                 (input)="onProductIdChange()"
                 minlength="3"
@@ -155,6 +156,11 @@
 
         <div class="form-actions">
           <button class="general-btn return" type="button" [routerLink]="''">Regresar</button>
-          <button class="general-btn reset" type="button" (click)="resetValues()">Reiniciar</button>
-          <button [disabled]="!form.valid" class="general-btn" type="submit">Enviar</button>
+          <button [disabled]="selectedProduct" class="general-btn reset" type="button" (click)="resetValues()">Reiniciar</button>
+          <ng-container *ngIf="selectedProduct; else notSelected">
+            <button [disabled]="!form.valid" class="general-btn" type="button" (click)="updateProduct()">Actializar</button>
+          </ng-container>
+          <ng-template #notSelected>
+            <button [disabled]="!form.valid" class="general-btn" type="submit">Enviar</button>
+          </ng-template>
         </div>

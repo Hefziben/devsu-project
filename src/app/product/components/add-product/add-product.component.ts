@@ -5,10 +5,11 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Product } from '../../..//models/product.model';
 import { ProductState } from '../../../store/product.store';
-import { AddProduct, AddProductSuccess, AddProductReset, ValidateProductId } from '../../../store/product.actions';
+import { AddProduct, AddProductSuccess, AddProductReset, ValidateProductId, GetProductById, UpdateProduct } from '../../../store/product.actions';
 import { Destroyable } from '../../../shared/abstract/destroyable';
-import { addYearsToDate, getCurrentDate } from '../../../util/date.util';
+import { addYearsToDate, getCurrentDate, getCurrentDateFromString } from '../../../util/date.util';
 import { getDefaultProduct } from '../../../util/product.util';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
@@ -20,17 +21,22 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
   @ViewChild('form', { static: false }) form: NgForm;
   @Select(ProductState.isProductIdExisting) isProductIdExisting$: Observable<boolean>;
   @Select(ProductState.validatingProductId) loading$: Observable<boolean>;
+  @Select(ProductState.getSelectedProduct) selectedProduct$: Observable<Product>;
   product: Product;
+  productId: string;
+  selectedProduct: Product;
   productIdValidation$ = new Subject<string>();
   currentDate = getCurrentDate();
   validating = false;
 
-  constructor(private store: Store, private actions: Actions) {
+  constructor(private store: Store, private actions: Actions, private route: ActivatedRoute) {
     super();
   }
 
   ngOnInit(): void {
     this.resetValues()
+    this.getQueryParams();
+    this.getSelectedProduct();
     this.setupProductIdValidation();
     this.setupLoadingSubscription();
     this.setupAddProductSuccessSubscription();
@@ -47,6 +53,11 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
     this.store.dispatch(new AddProduct(this.product));
   }
 
+
+  updateProduct(): void {
+    this.store.dispatch(new UpdateProduct(this.product));
+  }
+  
   onDateChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const dateAdd = addYearsToDate(target.value);
@@ -84,5 +95,31 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
       .subscribe(() => {
         this.resetValues();
       });
+  }
+
+  private getQueryParams(): void {
+    this.route.queryParams.subscribe(params => {
+      this.productId = params['id'];
+      if (this.productId) {
+        this.store.dispatch(new GetProductById(this.productId));
+      }
+    });
+  }
+
+  private getSelectedProduct(): void {
+    this.selectedProduct$.pipe(takeUntil(this.destroy$)).subscribe( product => {
+      this.selectedProduct = product;
+      if (this.selectedProduct) {
+        this.product = this.selectedProduct;
+        const releaseDate = getCurrentDateFromString(this.product.date_revision);
+        const revisionDate = addYearsToDate(releaseDate);
+        this.product.date_release = releaseDate;
+        this.product.date_revision = revisionDate;
+      }
+    });
+  }
+
+  get disableId(): boolean {
+    return !!this.selectedProduct;
   }
 }
