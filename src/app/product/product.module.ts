@@ -7,19 +7,20 @@ import { SharedModule } from 'src/app/shared/share.module';
 import { ProductComponent } from './pages/product.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { MenuDirective } from '../shared/directive/drop-down-menu.directive';
 
 @NgModule({
   declarations: [
     ProductComponent,
     AddProductComponent,
-    ProductListComponent
+    ProductListComponent,
+    MenuDirective
   ],
   imports: [
     CommonModule,
     ProductRoutingModule,
     SharedModule,
     FormsModule,
-    RouterModule
-  ]
+    RouterModule,  ]
 })
 export class ProductModule { }
