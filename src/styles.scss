@@ -11,3 +11,27 @@ html {
 button, input {
   font-family: $font-family;
 }
+
+.dropdown-menu {
+  position: absolute;
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
+  z-index: 9999;
+  padding: 0;
+  width: 120px;
+  padding: 0;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px;
+  cursor: pointer;
+  width: 120px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.dropdown-item:hover {
+  background-color: $primary-color;
+}
