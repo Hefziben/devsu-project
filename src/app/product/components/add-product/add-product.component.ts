@@ -57,7 +57,7 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
   updateProduct(): void {
     this.store.dispatch(new UpdateProduct(this.product));
   }
-  
+
   onDateChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const dateAdd = addYearsToDate(target.value);
@@ -106,7 +106,7 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
     });
   }
 
-  private getSelectedProduct(): void {
+  getSelectedProduct(): void {
     this.selectedProduct$.pipe(takeUntil(this.destroy$)).subscribe( product => {
       this.selectedProduct = product;
       if (this.selectedProduct) {
