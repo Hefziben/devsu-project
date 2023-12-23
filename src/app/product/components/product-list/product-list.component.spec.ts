@@ -5,6 +5,8 @@ import { GetProducts, GetProductsReset } from '../../../store/product.actions';
 import { ProductState } from '../../../store/product.store';
 import { of } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
+import { ActivatedRoute } from '@angular/router';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 
 const products: Product[] = [
   {
@@ -35,17 +37,25 @@ class MockStore {
   });
 }
 
+@Component({
+  selector: 'app-pagination',
+  template: ''
+})
+class MockPaginationComponent {}
 describe('ProductListComponent', () => {
   let component: ProductListComponent;
   let fixture: ComponentFixture<ProductListComponent>;
   let store: MockStore;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductListComponent ],
+      declarations: [ ProductListComponent,  MockPaginationComponent ],
       imports:[NgxsModule.forRoot()],
       providers: [
         { provide: Store, useClass: MockStore },
+        { provide: ActivatedRoute,
+          useValue: { queryParams: of({ id:'123' }) } },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
     fixture = TestBed.createComponent(ProductListComponent);
