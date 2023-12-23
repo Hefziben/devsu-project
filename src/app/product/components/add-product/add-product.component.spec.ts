@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddProductComponent } from './add-product.component';
 import { Actions, NgxsModule, Store } from '@ngxs/store';
-import { AddProduct, ValidateProductId } from '../../../store/product.actions';
+import { AddProduct, UpdateProduct, ValidateProductId } from '../../../store/product.actions';
 import { Product } from '../../../models/product.model';
 import { ProductState } from '../../../store/product.store';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,7 +34,7 @@ describe('AddProductComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: of({ get: jest.fn() })
+            queryParams: of({ id:'123' })
           },
         }],
     })
@@ -44,6 +44,16 @@ describe('AddProductComponent', () => {
     component = fixture.componentInstance;
     store = TestBed.inject(Store);
     actions$ = TestBed.inject(Actions);
+
+    Object.defineProperty(component, 'selectedProduct$', { get: () => of({
+      name: 'Product 2',
+      description: 'description 2',
+      id: '2',
+      logo: 'https://visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
+      date_release: '2023-12-21T20:09:40.803+00:00',
+      date_revision: '2024-12-21T20:09:40.803+00:00'
+    }) });
+
     fixture.detectChanges();
   });
 
@@ -84,6 +94,25 @@ describe('AddProductComponent', () => {
     component.resetValues();
     expect(component.product).not.toEqual(originalProduct);
   });
+
+  it('should dispatch UpdatedProduct action on updateProduct', () => {
+
+    const updateProductAction = new UpdateProduct(component.product);
+
+    jest.spyOn(store, 'dispatch');
+
+    component.onSubmit();
+    expect(store.dispatch).toHaveBeenCalledWith(updateProductAction);
+  });
+
+  it('should update the product properties based on the selected product', () => {
+    component.getSelectedProduct();
+    expect(component.product.name).toBe('Product 2');
+    expect(component.product.description).toBe('description 2');
+    expect(component.product.id).toBe('2');
+    expect(component.product.logo).toBe('https://visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg');
+  });
+
 
 
 });
