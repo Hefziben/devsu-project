@@ -21,12 +21,8 @@
             <td>{{product.date_release | date:'MM/dd/yyyy'}}</td>
             <td>{{product.date_revision | date:'MM/dd/yyyy'}}</td>
             <td>
-              <div class="dropdown">
+              <div dropdownMenu (editClick)="onEditClicked(product.id)" >
                 <button class="dropbtn">...</button>
-                <div class="dropdown-content" id="uniqueDropdownID">
-                  <span [routerLink]="['agregar']" [queryParams]="{ id:  product.id}">Editar</span>
-                  <span>Eliminar</span>
-                </div>
               </div>
             </td>
           </tr>

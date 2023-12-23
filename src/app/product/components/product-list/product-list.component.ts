@@ -5,13 +5,15 @@ import { Product } from '../../../models/product.model';
 import { Destroyable } from '../../../shared/abstract/destroyable';
 import { GetProducts, GetProductsReset } from '../../../store/product.actions';
 import { ProductState } from '../../../store/product.store';
-import { filterItems } from 'src/app/util/product.util';
+import { filterItems } from '../../../util/product.util';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MenuDirective } from '../../../shared/directive/drop-down-menu.directive';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
+  providers: [MenuDirective]
 })
 export class ProductListComponent extends Destroyable implements OnInit {
   // product selector
@@ -83,6 +85,10 @@ export class ProductListComponent extends Destroyable implements OnInit {
 
   addProduct() {
     this.router.navigate(['agregar'], { relativeTo: this.route });
+  }
+
+  onEditClicked(productId: string): void {
+    this.router.navigate(['agregar'], { relativeTo: this.route, queryParams: { id: productId } });
   }
 
 }
