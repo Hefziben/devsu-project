@@ -30,7 +30,7 @@ export class ProductListComponent extends Destroyable implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   isVisible: boolean;
-  eventReceived: string | undefined;
+  isMobile = false;
   constructor(
     private store: Store,
     private router: Router,
@@ -41,6 +41,8 @@ export class ProductListComponent extends Destroyable implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkScreenWidth();
+    window.addEventListener('resize', this.checkScreenWidth.bind(this));
     this.store.dispatch((new GetProductsReset()));
     this.products$.pipe(takeUntil(this.destroy$)).subscribe(products => {
       this.products = products;
@@ -59,6 +61,10 @@ export class ProductListComponent extends Destroyable implements OnInit {
         this.filteredProducts = filteredProducts;
         this.updateTotalItems()
       });
+  }
+
+  checkScreenWidth() {
+    this.isMobile = window.innerWidth <= 600;
   }
 
   getStartIndex(): number {

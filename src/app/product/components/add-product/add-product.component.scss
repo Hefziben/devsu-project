@@ -27,6 +27,13 @@
         border-bottom: 2px solid $light-color;
         padding-bottom: 1rem;
       }
+      form {
+        height: 100vh;
+        overflow-y: scroll;
+        @media (min-width: 601px) {
+            height: auto;
+      }
+    }
 
       .form-row {
         display: flex;
@@ -43,21 +50,30 @@
           flex: 1;
           padding: 10px;
           display: flex;
-          justify-content: space-between;
+          flex-direction: column;
+          @media (min-width: 601px) {
+            flex-direction: row;
+            justify-content: space-between;
+          }
         }
       }
 
       .form-actions {
-        margin-top: 20px;
         display: flex;
         justify-content: space-around;
+        @media (min-width: 601px) {
+          margin-top: 20px;
+        }
       }
 
       .form-control-group {
         display: flex;
         flex-direction: column;
-        width: 45%;
+        width: 85%;
         min-height: 114px;
+        @media (min-width: 601px) {
+          width: 45%;
+        }
 
         .field-title {
           font-weight: 600;
@@ -143,6 +159,13 @@
     .reset {
       background-color: $tertiary-color;
     }
+  }
+}
+
+@media (min-width: 300px) and (max-width: 601px) {
+  .form-container, .main-content, .content-wrapper {
+    height: 100vh; /* Use vh for viewport height */
+    overflow-y: scroll;
   }
 }
 
