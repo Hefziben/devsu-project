@@ -39,7 +39,7 @@ jest 28.1.3
 
 ## Instalación
 
-Abre el link del repositorio eb githup: 
+Abre el link del repositorio eb githup: https://github.com/Hefziben/devsu-project/tree/develop
 
 Selecciona la rama: Develop
 
