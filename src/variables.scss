@@ -11,10 +11,16 @@ $font-family:  "Roboto", "Helvetica Neue", sans-serif;
   color: $danger-color
 }
 
-.input-validation-error-text {
+.input-validation-text {
   font-family: $font-family;
   font-size: 1rem;
   color: $danger-color;
+  margin: 4px;
+}
+
+.input-validation {
+  font-family: $font-family;
+  font-size: 1rem;
   margin: 4px;
 }
 
