@@ -9,6 +9,8 @@ import { ProductState } from './store/product.store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { SharedModule } from './shared/share.module';
 import { HeaderInterceptor } from './shared/http-interceptor/header-interceptor';
+import { ErrorInterceptor } from './shared/http-interceptor/error.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +31,11 @@ import { HeaderInterceptor } from './shared/http-interceptor/header-interceptor'
       useClass: HeaderInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
