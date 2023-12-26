@@ -8,7 +8,7 @@ import { ProductState } from '../../../store/product.store';
 import { AddProduct, AddProductSuccess, AddProductReset, ValidateProductId, GetProductById, UpdateProduct, UpdateProductSuccess } from '../../../store/product.actions';
 import { Destroyable } from '../../../shared/abstract/destroyable';
 import { addYearsToDate, getCurrentDate, getCurrentDateFromString } from '../../../util/date.util';
-import { createFormControls, getDefaultProduct } from '../../../util/product.util';
+import {  getDefaultProduct } from '../../../util/product.util';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -28,8 +28,6 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
   productIdValidation$ = new Subject<string>();
   currentDate = getCurrentDate();
   validating = false;
-  formControls = createFormControls;
-
   constructor(private store: Store, private actions: Actions, private route: ActivatedRoute, private router: Router) {
     super();
   }
