@@ -20,7 +20,8 @@ Test practico para la posicion de Anguar fron-end Developer
 
 ## Mobile
 ![Mobile List Page](/docs/test/mobile/mobile-list.PNG);
-![Mobile Add Page](/docs/test/desktop/desktop-lista-menu.PNG);
+![Mobile Add Page](/docs/test/mobile/mobile-add.PNG);
+![Mobile Edit Page](/docs/test/mobile/mobile-edit.PNG);
  
 # Prerrequisitos:
 Node.js  14.20.0
