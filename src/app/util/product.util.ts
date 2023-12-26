@@ -39,3 +39,4 @@ export const productUpdateHelper = (array: Product[], newValue: Product) => {
   // If task with given id is not found, return the original list
   return array;
 }
+export const displayedColumnsDefault: string[] = ['Logo','Nombre del producto','Descripción','Fecha Liberación','Fecha Restructuración', ''];
