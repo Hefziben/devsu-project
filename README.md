@@ -1,18 +1,23 @@
 
 Test Practico de Devsu
+
 Test practico para la posicion de Anguar fron-end Developer
 
 ## Características
 
  Ver lista de productos
+
  Buscar producto por nombre
+
  Añadir producto
+ 
  Editar prodcuto
+ 
  Eliminar producto
 
  ## Capturas de pantalla
 
- ![Desktop List Page](/docs/test/desktop/desktop-lista.png);
+![Desktop List Page](/docs/test/desktop/desktop-lista.PNG);
 ![Desktop Add Page](/docs/test/desktop/desktop-add.PNG);
 ![Desktop Edit](/docs/test/desktop/desktop-edit.PNG);
 ![Desktop Edit and Delete Menu](/docs/test/desktop/desktop-lista-menu.PNG);
@@ -25,28 +30,45 @@ Test practico para la posicion de Anguar fron-end Developer
  
 # Prerrequisitos:
 Node.js  14.20.0
+
 Angular CLI 14.2.13
+
 typescript4.8.0
+
 jest 28.1.3
 
 ## Instalación
 
 Abre el link del repositorio eb githup: 
+
 Selecciona la rama: Develop
+
 clona o descarga el codigo del proyecto
+
 
 Abre una terminal en la raíz del proyecto.
 
 ## Instala dependencias
+
+```
 npm install
+```
+
 
 ## Ejecutar en entorno local
 
-ng serve
+```
+npm serve
+
+```
 Abre el navegador y visita http://localhost:4200 para acceder a la aplicación.
 
 ## pruebas unitarias
+
+```
 npm test
+
+```
 
 ## Licencia
 MIT
