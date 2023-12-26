@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddProductComponent } from './components/add-product/add-product.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductComponent } from './pages/product.component';
 
 const routes: Routes = [
@@ -11,11 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ProductListComponent
+        loadChildren:  () => import('./components/product-list/product-list.module').then( m => m.ProductListModule)
       },
       {
         path: 'agregar',
-        component: AddProductComponent
+        loadChildren: () => import('./components/add-product/add-product.module').then(m => m.AddProductModule)
       }
     ]
   }
