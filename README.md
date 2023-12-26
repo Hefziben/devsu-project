@@ -13,14 +13,14 @@ Test practico para la posicion de Anguar fron-end Developer
  ## Capturas de pantalla
 
  ![Desktop List Page](/docs/test/desktop/desktop-lista.png);
-![Desktop Add Page](/docs/test/desktop/desktop-add.png);
-![Desktop Edit](/docs/test/desktop/desktop-edit.png);
-![Desktop Edit and Delete Menu](/docs/test/desktop/desktop-lista-menu.png);
+![Desktop Add Page](/docs/test/desktop/desktop-add.PNG);
+![Desktop Edit](/docs/test/desktop/desktop-edit.PNG);
+![Desktop Edit and Delete Menu](/docs/test/desktop/desktop-lista-menu.PNG);
 
 
 ## Mobile
-![Mobile List Page](/docs/test/mobile/mobile-add.png);
-![Mobile Add Page](/docs/test/mobile/mobile-list.png);
+![Mobile List Page](/docs/test/mobile/mobile-list.PNG);
+![Mobile Add Page](/docs/test/desktop/desktop-lista-menu.PNG);
  
 # Prerrequisitos:
 Node.js  14.20.0
