@@ -2,11 +2,12 @@
 
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
-import { ProductService } from '../services/product.service';
-import {GetProducts, GetProductsFailed, GetProductsReset, GetProductsSuccess, ProductStateModel, ValidateProductId, ValidateProductIdFailed, ValidateProductIdSuccess, AddProductReset, AddProduct, AddProductSuccess, AddProductFailed, GetProductById, UpdateProduct, UpdateProductSuccess, UpdateProductFailed } from './product.actions';
+import { ProductService } from '../services/product/product.service';
+import {GetProducts, GetProductsFailed, GetProductsReset, GetProductsSuccess, ProductStateModel, ValidateProductId, ValidateProductIdFailed, ValidateProductIdSuccess, AddProductReset, AddProduct, AddProductSuccess, AddProductFailed, GetProductById, UpdateProduct, UpdateProductSuccess, UpdateProductFailed, DeleteProductFailed, DeleteProductSuccess, DeleteProduct } from './product.actions';
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product.model';
 import { productUpdateHelper } from '../util/product.util';
+import { getLoaderStatus } from '../util/loader.util';
 
 
 @State<ProductStateModel>({
@@ -14,12 +15,12 @@ import { productUpdateHelper } from '../util/product.util';
   defaults: {
     products: [],
     loadingProducts: false,
-    loadingProductsError: null,
     validatingProductId: false,
     productIdExist: false,
     addingProduct: false,
     selectedProduct: null,
-    updatingProduct: false
+    updatingProduct: false,
+    errorMessage: null
   },
 })
 
@@ -48,17 +49,30 @@ export class ProductState {
     return state.selectedProduct;
   }
 
+  @Selector()
+  static showLoader(state: ProductStateModel): boolean {
+    return getLoaderStatus(state.loadingProducts, state.addingProduct, state.updatingProduct);
+  }
+
+  @Selector()
+  static getErrorMessage(state: ProductStateModel): string | null {
+    return state.errorMessage;
+  }
+
+
 
   // Actions
   @Action(GetProducts)
   getProducts(
-      context: StateContext<ProductStateModel>) {
-      return this.productService.getProducts().pipe(tap(response => {
-        context.patchState({ loadingProducts: true});
-
+    context: StateContext<ProductStateModel>) {
+    context.patchState({ loadingProducts: true });
+    return this.productService.getProducts().pipe(tap({
+      next: response => {
         this.store.dispatch(new GetProductsSuccess(response));
-      }, error => {
-        this.store.dispatch(new GetProductsFailed(error.error));
+      },
+      error: error => {
+        this.store.dispatch(new GetProductsFailed());
+      }
     }));
   }
 
@@ -78,7 +92,6 @@ export class ProductState {
       payload: GetProductsFailed) {
       patchState({
         loadingProducts: false,
-        loadingProductsError: payload.message
       });
   }
 
@@ -87,7 +100,7 @@ export class ProductState {
       { patchState }: StateContext<ProductStateModel>) {
       patchState({
         loadingProducts: false,
-        loadingProductsError: null,
+        errorMessage: null,
         products: [],
         validatingProductId: false,
         productIdExist: false
@@ -98,12 +111,14 @@ export class ProductState {
   validateProductId(
       context: StateContext<ProductStateModel>,
       payload: ValidateProductId) {
-      return this.productService.validateProductId(payload.ProductId).pipe(tap(response => {
-        context.patchState({ validatingProductId: true});
-
+      context.patchState({ validatingProductId: true});
+    return this.productService.validateProductId(payload.ProductId).pipe(tap({
+      next: response => {
         this.store.dispatch(new ValidateProductIdSuccess(response));
-      }, error => {
-        this.store.dispatch(new ValidateProductIdFailed(error.error));
+      },
+      error: error => {
+        this.store.dispatch(new ValidateProductIdFailed());
+      }
     }));
   }
 
@@ -128,14 +143,16 @@ export class ProductState {
 
   @Action(AddProduct)
   addProduct(
-      context: StateContext<ProductStateModel>,
-      payload: AddProduct) {
-      return this.productService.addProduct(payload.product).pipe(tap(response => {
-        context.patchState({ addingProduct: true});
-
+    context: StateContext<ProductStateModel>,
+    payload: AddProduct) {
+    context.patchState({ addingProduct: true });
+    return this.productService.addProduct(payload.product).pipe(tap({
+      next: response => {
         this.store.dispatch(new AddProductSuccess(response));
-      }, error => {
-        this.store.dispatch(new AddProductFailed(error.error));
+      },
+      error: error => {
+        this.store.dispatch(new AddProductFailed());
+      }
     }));
   }
 
@@ -157,7 +174,6 @@ export class ProductState {
       payload: AddProductFailed) {
       patchState({
         addingProduct: false,
-        loadingProductsError: payload.message
       });
   }
 
@@ -185,14 +201,16 @@ export class ProductState {
 
   @Action(UpdateProduct)
   updateProduct(
-      context: StateContext<ProductStateModel>,
-      payload: UpdateProduct) {
-      return this.productService.updateProduct(payload.product).pipe(tap(response => {
-        context.patchState({ updatingProduct: true});
-
+    context: StateContext<ProductStateModel>,
+    payload: UpdateProduct) {
+    context.patchState({ updatingProduct: true });
+    return this.productService.updateProduct(payload.product).pipe(tap({
+      next: response => {
         this.store.dispatch(new UpdateProductSuccess(response));
-      }, error => {
-        this.store.dispatch(new UpdateProductFailed(error.error));
+      },
+      error: error => {
+        this.store.dispatch(new UpdateProductFailed());
+      }
     }));
   }
 
@@ -211,6 +229,48 @@ export class ProductState {
 
   @Action(UpdateProductFailed)
   updateProductFailed(
+      { patchState }: StateContext<ProductStateModel>) {
+      patchState({
+        updatingProduct: false
+      });
+  }
+
+  @Action(DeleteProduct)
+  deleteProduct(
+    context: StateContext<ProductStateModel>,
+    payload: DeleteProduct) {
+    context.patchState({ updatingProduct: true });
+    return this.productService.deleteProduct(payload.productId).pipe(tap({
+      next: () => {
+        this.store.dispatch(new DeleteProductSuccess(payload.productId));
+      },
+      error: (response) => {
+        if (response.text) {
+          this.store.dispatch(new DeleteProductSuccess(payload.productId));
+        } else {
+          this.store.dispatch(new DeleteProductFailed());
+        }
+      }
+    }));
+
+  }
+
+  @Action(DeleteProductSuccess)
+  deleteProductSuccess(
+      context: StateContext<ProductStateModel>,
+      payload: DeleteProductSuccess) {
+      const state = { ...context.getState() };
+      const updatedList = state.products.filter(product => product.id !== payload.productId);
+      context.patchState({
+        ...state,
+          products: [...updatedList],
+          updatingProduct: false
+      });
+
+  }
+
+  @Action(DeleteProductFailed)
+  deleteProductFailed(
       { patchState }: StateContext<ProductStateModel>) {
       patchState({
         updatingProduct: false
