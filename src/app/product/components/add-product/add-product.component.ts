@@ -5,11 +5,11 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Product } from '../../..//models/product.model';
 import { ProductState } from '../../../store/product.store';
-import { AddProduct, AddProductSuccess, AddProductReset, ValidateProductId, GetProductById, UpdateProduct } from '../../../store/product.actions';
+import { AddProduct, AddProductSuccess, AddProductReset, ValidateProductId, GetProductById, UpdateProduct, UpdateProductSuccess } from '../../../store/product.actions';
 import { Destroyable } from '../../../shared/abstract/destroyable';
 import { addYearsToDate, getCurrentDate, getCurrentDateFromString } from '../../../util/date.util';
-import { getDefaultProduct } from '../../../util/product.util';
-import { ActivatedRoute } from '@angular/router';
+import { createFormControls, getDefaultProduct } from '../../../util/product.util';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
@@ -28,8 +28,9 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
   productIdValidation$ = new Subject<string>();
   currentDate = getCurrentDate();
   validating = false;
+  formControls = createFormControls;
 
-  constructor(private store: Store, private actions: Actions, private route: ActivatedRoute) {
+  constructor(private store: Store, private actions: Actions, private route: ActivatedRoute, private router: Router) {
     super();
   }
 
@@ -40,6 +41,7 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
     this.setupProductIdValidation();
     this.setupLoadingSubscription();
     this.setupAddProductSuccessSubscription();
+    this.setupUpdateProductSuccessSubscription();
   }
 
 
@@ -65,8 +67,10 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
   }
 
   onProductIdChange(): void {
-    this.validating = true;
-    this.productIdValidation$.next(this.product.id);
+    if (this.product.id.length > 3) {
+      this.validating = true;
+      this.productIdValidation$.next(this.product.id);
+    }
   }
 
   private resetFormIfNeeded(): void {
@@ -94,6 +98,15 @@ export class AddProductComponent extends Destroyable implements OnInit, OnDestro
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.resetValues();
+        this.router.navigateByUrl('/products');
+      });
+  }
+
+  private setupUpdateProductSuccessSubscription(): void {
+    this.actions.pipe(ofActionDispatched(UpdateProductSuccess))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.router.navigateByUrl('/products');
       });
   }
 

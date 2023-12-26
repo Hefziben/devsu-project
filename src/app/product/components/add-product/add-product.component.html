@@ -8,12 +8,11 @@
             <div class="form-control-group">
               <div class="field-title">ID <span class="required">*</span></div>
               <input
-              [disabled]="disableId"
-                [class.loading]="loading$ | async"
+                [disabled]="disableId"
                 (input)="onProductIdChange()"
                 minlength="3"
                 maxlength="10"
-                [class.invalid]="productId.invalid && productId.touched"
+                [ngClass]="{invalid: productId.invalid && productId.touched}"
                 [(ngModel)]="product.id"
                 #productId="ngModel"
                 name="productId"
@@ -22,18 +21,22 @@
                 [required]="true"
                 [attr.aria-invalid]="productId.invalid && productId.touched ? true : null"
               />
-              <div *ngIf="validating" class="loading"></div>
+              <ng-container *ngIf="validating && productId.valid">
+                <p class="input-validation">
+                  Verificando id...
+                </p>
+              </ng-container>
               <ng-container *ngIf="!(isProductIdExisting$ | async)">
-                <p class="caption-2 input-validation-error-text"
+                <p class="input-validation error-text"
                   *ngIf="productId.invalid && productId.touched && !productId.errors?.['minlength']">
                   Este campo es obligatorio!
                 </p>
-                <p class="caption-2 input-validation-error-text" *ngIf="productId.errors?.['minlength']">
+                <p class="input-validation error-text" *ngIf="productId.errors?.['minlength']">
                   Se requiere mínimo 3 caracteres.
                 </p>
               </ng-container>
-              <ng-container *ngIf="isProductIdExisting$ | async">
-                <p class="caption-2 input-validation-error-text">
+              <ng-container *ngIf="(isProductIdExisting$ | async) && !validating">
+                <p class="input-validation error-text">
                   ID no válido
                 </p>
               </ng-container>
@@ -41,7 +44,7 @@
             <div class="form-control-group">
               <div class="field-title">Nombre <span class="required">*</span></div>
               <input
-                [class.invalid]="productName.invalid && productName.touched"
+                [ngClass]="{invalid: productName.invalid && productName.touched}"
                 [(ngModel)]="product.name"
                 #productName="ngModel"
                 name="productName"
@@ -53,11 +56,11 @@
                 [attr.aria-invalid]="productName.invalid && productName.touched ? true : null"
               />
               <ng-container *ngIf="productName.invalid && productName.touched">
-                <p class="caption-2 input-validation-error-text"
+                <p class="input-validation error-text"
                   *ngIf="productName.invalid && productName.touched && !productName.errors?.['minlength']">
                   Este campo es obligatorio!
                 </p>
-                <p class="caption-2 input-validation-error-text" *ngIf="productName.errors?.['minlength']">
+                <p class="input-validation-text" *ngIf="productName.errors?.['minlength']">
                   Se requiere mínimo 5 caracteres.
                 </p>
               </ng-container>
@@ -68,7 +71,7 @@
             <div class="form-control-group">
               <div class="field-title">Descripción <span class="required">*</span></div>
               <textarea
-                [class.invalid]="productDescription.invalid && productDescription.touched"
+                [ngClass]="{invalid: productDescription.invalid && productDescription.touched}"
                 [(ngModel)]="product.description"
                 #productDescription="ngModel"
                 name="productDescription"
@@ -80,11 +83,11 @@
                 [attr.aria-invalid]="productDescription.invalid && productDescription.touched ? true : null"
               ></textarea>
               <ng-container *ngIf="productDescription.invalid && productDescription.touched">
-                <p class="caption-2 input-validation-error-text"
+                <p class="input-validation error-text"
                   *ngIf="productDescription.invalid && productDescription.touched && !productDescription.errors?.['minlength']">
                   Este campo es obligatorio!
                 </p>
-                <p class="caption-2 input-validation-error-text" *ngIf="productDescription.errors?.['minlength']">
+                <p class="input-validation error-text" *ngIf="productDescription.errors?.['minlength']">
                   Se requiere mínimo 10 caracteres.
                 </p>
               </ng-container>
@@ -92,7 +95,7 @@
             <div class="form-control-group">
               <div class="field-title">Logo <span class="required">*</span></div>
               <input
-                [class.invalid]="productLogo.invalid && productLogo.touched"
+                [ngClass]="{invalid: productLogo.invalid && productLogo.touched}"
                 [(ngModel)]="product.logo"
                 #productLogo="ngModel"
                 name="productLogo"
@@ -102,7 +105,7 @@
                 [attr.aria-invalid]="productLogo.invalid && productLogo.touched ? true : null"
               />
               <ng-container *ngIf="productLogo.invalid && productLogo.touched">
-                <p class="caption-2 input-validation-error-text" *ngIf="productLogo.invalid && productLogo.touched">
+                <p class="input-validation error-text" *ngIf="productLogo.invalid && productLogo.touched">
                   Este campo es obligatorio!
                 </p>
               </ng-container>
@@ -114,7 +117,7 @@
               <div class="field-title">Fecha Liberación <span class="required">*</span></div>
               <input
                 (input)="onDateChange($event)"
-                [class.invalid]="productDateRelease.invalid && productDateRelease.touched"
+                [ngClass]="{invalid: productDateRelease.invalid && productDateRelease.touched}"
                 [(ngModel)]="product.date_release"
                 #productDateRelease="ngModel"
                 name="productDateRelease"
@@ -125,7 +128,7 @@
                 [attr.aria-invalid]="productDateRelease.invalid && productDateRelease.touched ? true : null"
               />
               <ng-container *ngIf="productDateRelease.invalid && productDateRelease.touched">
-                <p class="caption-2 input-validation-error-text"
+                <p class="input-validation error-text"
                   *ngIf="productDateRelease.invalid && productDateRelease.touched">
                   Este campo es obligatorio!
                 </p>
@@ -135,7 +138,7 @@
               <div class="field-title">Fecha Revisión <span class="required">*</span></div>
               <input
                 disabled
-                [class.invalid]="productDateRevision.invalid && productDateRevision.touched"
+                [ngClass]="{invalid: productDateRevision.invalid && productDateRevision.touched}"
                 [(ngModel)]="product.date_revision"
                 #productDateRevision="ngModel"
                 name="productDateRevision"
@@ -145,7 +148,7 @@
                 [attr.aria-invalid]="productDateRevision.invalid && productDateRevision.touched ? true : null"
               />
               <ng-container *ngIf="productDateRevision.invalid && productDateRevision.touched">
-                <p class="caption-2 input-validation-error-text"
+                <p class="input-validation error-text"
                   *ngIf="productDateRevision.invalid && productDateRevision.touched">
                   Este campo es obligatorio!
                 </p>
