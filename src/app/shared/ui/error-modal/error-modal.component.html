@@ -1,0 +1,10 @@
+<div *ngIf="isVisible$ | async">
+  <div class="error-container">
+    <div class="modal-content">
+      <label class="modal-close" for="modal-toggle" (click)="onClose()" >&#x2715;</label>
+      <h2>Error</h2><hr />
+      <p>{{ error }}</p>
+      <button class="modal-content-btn" type="button" (click)="onClose()" >OK</button>
+    </div>
+  </div>
+</div>
