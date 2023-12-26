@@ -1,27 +1,61 @@
-# BancoPichincha
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.11.
+Test Practico de Devsu
+Test practico para la posicion de Anguar fron-end Developer
 
-## Development server
+## Características
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+ Ver lista de productos
+ Buscar producto por nombre
+ Añadir producto
+ Editar prodcuto
+ Eliminar producto
 
-## Code scaffolding
+ ## Capturas de pantalla
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ ![Desktop List Page](/docs/demo/desktop/desktop-lista.png);
+![Desktop Add Page](/docs/demo/desktop/desktop-add.png);
+![Desktop Edit and Delete](/docs/demo/desktop/desktop-edit.png);
 
-## Build
+![Mobile List Page](/docs/demo/mobile/mobile-add.png);
+![Mobile Add Page](/docs/demo/mobile/mobile-list.png);
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Mobile
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![Preview Mobile List Page](/docs/demo/mobile-list-product.jpg)
 
-## Running end-to-end tests
+![Preview Mobile Create Page](/docs/demo/mobile-product-create.jpg);
+ 
+# Prerrequisitos:
+Node.js  14.20.0
+Angular CLI 14.2.13
+typescript4.8.0
+jest 28.1.3
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Instalación
 
-## Further help
+Clona o descarga el repositorio : https://github.com/Hefziben/devsu-project
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Abre una terminal en la raíz del proyecto.
+
+## Instala dependencias
+npm install
+
+## Ejecutar en entorno local
+
+ng serve
+Abre el navegador y visita http://localhost:4200 para acceder a la aplicación.
+
+## pruebas unitarias
+npm test
+
+## Licencia
+MIT
+
+## Autor✒️
+
+- **Milton Arenas** - _Angular Developer_
+- [hefziben](https://github.com/hefziben)
+- Email : hefziben@gmail.com
+
+
