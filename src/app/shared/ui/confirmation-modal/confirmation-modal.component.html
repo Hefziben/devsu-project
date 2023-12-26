@@ -1,0 +1,15 @@
+<div class="modal-container" *ngIf="isVisible$ | async">
+  <div  class="modal-confirmation">
+    <div class="modal-header">
+      <h3> {{configuration.title}}</h3>
+      <span (click)="cancel()" data-confirm=0 class="modal-action" class="modal-close">&#x2715;</span>
+    </div>
+    <div class="modal-content">
+      <p>{{configuration.message}}</p>
+    </div>
+    <div class="modal-buttons">
+      <button (click)="cancel()" class="modal-button-no" data-confirm=0 >{{configuration.cancelButtonText ? configuration.cancelButtonText : 'No' }}</button>
+      <button (click)="confirm()" class="modal-button-yes" data-confirm=1 >{{configuration.confirmButtonText ? configuration.confirmButtonText : 'Sí' }}</button>
+    </div>
+  </div>
+</div>

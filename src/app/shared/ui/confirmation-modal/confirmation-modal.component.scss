@@ -1,0 +1,94 @@
+@import '../../../../variables.scss';
+
+.modal-container {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  top: 30%;
+}
+
+.modal-confirmation {
+  z-index: 999;
+  position: absolute;
+  display: inline-block;
+  max-width: 22rem;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background: #fff;
+  text-align: left;
+  transition: 0.5s ease all;
+
+  & .modal-header {
+    position: relative;
+    background: $danger-color;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+
+    h3 {
+      font-weight: 300;
+      margin: 0;
+    }
+  }
+
+  & .modal-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  & .modal-content {
+    padding: 30px 15px;
+
+    p {
+      margin: 0;
+      color: #61686e;
+    }
+  }
+
+  & .modal-buttons {
+    padding: 0 15px 15px 15px;
+    text-align: right;
+  }
+
+  & .modal-button-no {
+    border: none;
+    padding: 10px 30px;
+    background: $background-color;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+
+    &:hover {
+      background: $light-color;
+    }
+  }
+
+  & .modal-button-yes {
+    border: none;
+    padding: 10px 50px;
+    background: $primary-color;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 10px;
+
+    &:hover {
+      background: darken($primary-color, 8%);
+    }
+  }
+}
