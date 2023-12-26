@@ -5,10 +5,10 @@ export interface ProductStateModel {
   loadingProducts: boolean;
   validatingProductId: boolean;
   productIdExist: boolean;
-  loadingProductsError: string | null;
   addingProduct: boolean;
   updatingProduct: boolean;
   selectedProduct: Product | null;
+  errorMessage: string | null;
 }
 
 // Actions
@@ -23,7 +23,6 @@ export class GetProductsSuccess {
 
 export class GetProductsFailed {
   static readonly type = '[Product] Get Products Failed';
-  constructor(public message: string) {}
 }
 
 export class GetProductsReset {
@@ -42,7 +41,6 @@ export class ValidateProductIdSuccess {
 
 export class ValidateProductIdFailed {
   static readonly type = '[Product] Validate Products ID Failed';
-  constructor(public message: string) {}
 }
 
 export class AddProduct {
@@ -57,7 +55,6 @@ export class AddProductSuccess {
 
 export class AddProductFailed {
   static readonly type = '[Product] Add Product Failed';
-  constructor(public message: string) {}
 }
 
 export class AddProductReset {
@@ -81,6 +78,20 @@ export class UpdateProductSuccess {
 
 export class UpdateProductFailed {
   static readonly type = '[Product] Update Product Failed';
-  constructor(public message: string) {}
 }
+
+export class DeleteProduct {
+  static readonly type = '[Product] Delete Product';
+  constructor(public productId: string) {}
+}
+
+export class DeleteProductSuccess {
+  static readonly type = '[Product] Delete Product Success';
+  constructor(public productId: string) {}
+}
+
+export class DeleteProductFailed {
+  static readonly type = '[Product] Delete Product Failed';
+}
+
 
