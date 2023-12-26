@@ -4,7 +4,7 @@ import { NgxsModule, Store } from '@ngxs/store';
 import { GetProducts, GetProductsReset } from '../../../store/product.actions';
 import { ProductState } from '../../../store/product.store';
 import { of } from 'rxjs';
-import { Product } from 'src/app/models/product.model';
+import { Product } from '../../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 

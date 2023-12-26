@@ -14,14 +14,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of filteredProducts | slice: getStartIndex() : getEndIndex()">
+          <tr *ngFor="let product of getSlicedProducts; trackBy: trackById">
             <td><img class="product-image" [src]="product.logo" alt="Logo"></td>
-            <td>{{product.name}}</td>
-            <td>{{product.description}}</td>
-            <td>{{product.date_release | date:'MM/dd/yyyy'}}</td>
-            <td>{{product.date_revision | date:'MM/dd/yyyy'}}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.date_release | date:'MM/dd/yyyy' }}</td>
+            <td>{{ product.date_revision | date:'MM/dd/yyyy' }}</td>
             <td>
-              <div dropdownMenu (editClick)="onEditClicked(product.id)" >
+              <div dropdownMenu (editClick)="onEditClicked(product.id)" (deleteClick)="showConfirmation(product)">
                 <button class="dropbtn">...</button>
               </div>
             </td>
