@@ -5,7 +5,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { LoadingComponent } from './ui/loading/loading.component';
 import { ErrorPopupComponent } from './ui/error-modal/error-modal.component';
 import { ConfirmationModalComponent } from './ui/confirmation-modal/confirmation-modal.component';
-import { FooterComponent } from './layout/footer/footer.component';
+
 
 @NgModule({
   declarations: [
@@ -13,8 +13,7 @@ import { FooterComponent } from './layout/footer/footer.component';
     PaginationComponent,
     LoadingComponent,
     ErrorPopupComponent,
-    ConfirmationModalComponent,
-    FooterComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     CommonModule
@@ -24,8 +23,7 @@ import { FooterComponent } from './layout/footer/footer.component';
     PaginationComponent,
     LoadingComponent,
     ErrorPopupComponent,
-    ConfirmationModalComponent,
-    FooterComponent
+    ConfirmationModalComponent
   ]
 })
 export class SharedModule { }
