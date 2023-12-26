@@ -31,7 +31,9 @@ jest 28.1.3
 
 ## Instalación
 
-Clona o descarga el repositorio : https://github.com/Hefziben/devsu-project
+Abre el link del repositorio eb githup: 
+Selecciona la rama: Develop
+clona o descarga el codigo del proyecto
 
 Abre una terminal en la raíz del proyecto.
 
